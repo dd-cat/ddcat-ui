@@ -266,7 +266,7 @@ export default {
     getList() {
       this.loading = true
       listMenu(this.queryParams).then(response => {
-        this.menuList = this.handleTree(response.data, 'menuId')
+        this.menuList = this.handleTree(response.data, 'id')
         this.loading = false
       })
     },
@@ -276,8 +276,8 @@ export default {
         delete node.children
       }
       return {
-        id: node.menuId,
-        label: node.menuName,
+        id: node.id,
+        label: node.name,
         children: node.children
       }
     },
@@ -285,8 +285,8 @@ export default {
     getTreeselect() {
       listMenu().then(response => {
         this.menuOptions = []
-        const menu = { menuId: 0, menuName: '主类目', children: [] }
-        menu.children = this.handleTree(response.data, 'menuId')
+        const menu = { id: 0, menuName: '主类目', children: [] }
+        menu.children = this.handleTree(response.data, 'id')
         this.menuOptions.push(menu)
       })
     },
@@ -312,15 +312,12 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        menuId: undefined,
+        id: undefined,
         parentId: 0,
-        menuName: undefined,
+        name: undefined,
         icon: undefined,
-        menuType: '2',
-        orderNum: undefined,
-        isFrame: '1',
-        isCache: '0',
-        visible: '0',
+        type: '2',
+        sort: undefined,
         status: '0'
       }
       this.resetForm('form')
@@ -360,7 +357,7 @@ export default {
     submitForm: function() {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          if (this.form.menuId != undefined) {
+          if (this.form.id != undefined) {
             updateMenu(this.form).then(response => {
               this.msgSuccess('修改成功')
               this.open = false
