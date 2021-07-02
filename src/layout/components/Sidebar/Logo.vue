@@ -1,13 +1,18 @@
 <template>
-  <div class="sidebar-logo-container" :class="{'collapse':collapse}" :style="{ backgroundColor: sideTheme === 'theme-dark' ? variables.menuBg : variables.menuLightBg }">
+  <div class="sidebar-logo-container" :class="{'collapse':collapse}"
+       :style="{ backgroundColor: sideTheme === 'theme-dark' ? variables.menuBg : variables.menuLightBg }">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo">
-        <h1 v-else class="sidebar-title" :style="{ color: sideTheme === 'theme-dark' ? variables.sidebarTitle : variables.sidebarLightTitle }">{{ title }} </h1>
+        <img v-if="logo" :src="logo" class="sidebar-logo"/>
+        <h1 v-else class="sidebar-title"
+            :style="{ color: sideTheme === 'theme-dark' ? variables.sidebarTitle : variables.sidebarLightTitle }">
+          {{ title }} </h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo">
-        <h1 class="sidebar-title" :style="{ color: sideTheme === 'theme-dark' ? variables.sidebarTitle : variables.sidebarLightTitle }">{{ title }} </h1>
+        <img v-if="logo" :src="logo" class="sidebar-logo"/>
+        <h1 class="sidebar-title"
+            :style="{ color: sideTheme === 'theme-dark' ? variables.sidebarTitle : variables.sidebarLightTitle }">
+          {{ title }} </h1>
       </router-link>
     </transition>
   </div>
@@ -15,7 +20,7 @@
 
 <script>
 import logoImg from '@/assets/logo/logo.png'
-import variables from '@/assets/styles/ddcat.scss'
+import variables from '@/assets/styles/variables.scss'
 
 export default {
   name: 'SidebarLogo',
@@ -27,9 +32,9 @@ export default {
   },
   computed: {
     variables() {
-      return variables;
+      return variables
     },
-	sideTheme() {
+    sideTheme() {
       return this.$store.state.settings.sideTheme
     }
   },

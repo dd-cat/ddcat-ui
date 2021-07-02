@@ -1,18 +1,18 @@
 import request from '@/utils/request'
 
 // 查询字典类型列表
-export function listType(query) {
+export function listType(data) {
   return request({
-    url: '/dict/type/list',
-    method: 'get',
-    params: query
+    url: '/dict/page',
+    method: 'post',
+    data: data
   })
 }
 
 // 查询字典类型详细
 export function getType(dictId) {
   return request({
-    url: '/dict/type/' + dictId,
+    url: '/dict/' + dictId,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getType(dictId) {
 // 新增字典类型
 export function addType(data) {
   return request({
-    url: '/dict/type',
+    url: '/dict',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addType(data) {
 // 修改字典类型
 export function updateType(data) {
   return request({
-    url: '/dict/type',
+    url: '/dict',
     method: 'put',
     data: data
   })
