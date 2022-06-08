@@ -7,17 +7,19 @@ const mimeMap = {
 }
 
 const baseUrl = process.env.VUE_APP_BASE_API
+
 export function downLoadZip(str, filename) {
   var url = baseUrl + str
   axios({
     method: 'get',
     url: url,
     responseType: 'blob',
-    headers: { 'Authorization': 'Bearer ' + getToken() }
+    headers: { 'token': getToken() }
   }).then(res => {
     resolveBlob(res, mimeMap.zip)
   })
 }
+
 /**
  * 解析blob响应内容并下载
  * @param {*} res blob响应内容
@@ -36,5 +38,5 @@ export function resolveBlob(res, mimeType) {
   aLink.setAttribute('download', fileName) // 设置下载文件名称
   document.body.appendChild(aLink)
   aLink.click()
-  document.body.removeChild(aLink);
+  document.body.removeChild(aLink)
 }

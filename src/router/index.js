@@ -90,19 +90,6 @@ export const constantRoutes = [
         meta: { title: '字典数据', icon: '' }
       }
     ]
-  },
-  {
-    path: '/gen',
-    component: Layout,
-    hidden: true,
-    children: [
-      {
-        path: 'edit/:tableId(\\d+)',
-        component: (resolve) => require(['@/views/tool/gen/editTable'], resolve),
-        name: 'GenEdit',
-        meta: { title: '修改生成配置' }
-      }
-    ]
   }
 ]
 

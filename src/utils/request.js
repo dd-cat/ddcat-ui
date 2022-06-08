@@ -19,7 +19,7 @@ service.interceptors.request.use(config => {
   // 是否需要设置 token
   const isToken = (config.headers || {}).isToken === false
   if (getToken() && !isToken) {
-    config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+    config.headers['token'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
   }
   // get请求映射params参数
   if (config.method === 'get' && config.params) {
@@ -55,19 +55,7 @@ service.interceptors.response.use(res => {
     const code = res.code || 200
     // 获取错误信息
     const msg = errorCode[code] || res.msg || errorCode['default']
-    if (code === 401) {
-      MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
-          confirmButtonText: '重新登录',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }
-      ).then(() => {
-        store.dispatch('LogOut').then(() => {
-          location.href = '/index'
-        })
-      }).catch(() => {
-      })
-    } else if (code === 500) {
+    if (code === 500) {
       Message({
         message: msg,
         type: 'error'
@@ -79,25 +67,32 @@ service.interceptors.response.use(res => {
       })
       return Promise.reject('error')
     } else {
+      if (res.data && res.data.code != 0) {
+        Notification.error({
+          title: res.data.msg
+        })
+      }
       return res.data
     }
   },
   error => {
-    console.log('err' + error)
-    let { message } = error
-    if (message == 'Network Error') {
-      message = '后端接口连接异常'
-    } else if (message.includes('timeout')) {
-      message = '系统接口请求超时'
-    } else if (message.includes('Request failed with status code')) {
-      message = '系统接口' + message.substr(message.length - 3) + '异常'
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+          MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
+              confirmButtonText: '重新登录',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }
+          ).then(() => {
+            store.dispatch('LogOut').then(() => {
+              location.href = '/index'
+            })
+          }).catch(() => {
+          })
+      }
     }
-    Message({
-      message: message,
-      type: 'error',
-      duration: 5 * 1000
-    })
-    return Promise.reject(error)
+    return Promise.reject(error.response.data.msg)   // 返回接口返回的错误信息
   }
 )
 

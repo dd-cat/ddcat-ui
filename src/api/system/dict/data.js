@@ -3,16 +3,16 @@ import request from '@/utils/request'
 // 查询字典数据列表
 export function listData(data) {
   return request({
-    url: '/dict/page',
+    url: '/dict/item/page',
     method: 'post',
     data: data
   })
 }
 
 // 查询字典数据详细
-export function getData(dictCode) {
+export function getData(ids) {
   return request({
-    url: '/dict/' + dictCode,
+    url: '/dict/item/' + ids,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getData(dictCode) {
 // 根据字典类型查询字典数据信息
 export function getDicts(dictType) {
   return request({
-    url: '/dict/item/' + dictType,
+    url: '/dict/item/type/' + dictType,
     method: 'get'
   })
 }
@@ -44,9 +44,9 @@ export function updateData(data) {
 }
 
 // 删除字典数据
-export function delData(dictCode) {
+export function delData(ids) {
   return request({
-    url: '/dict/item/' + dictCode,
+    url: '/dict/item/' + ids,
     method: 'delete'
   })
 }

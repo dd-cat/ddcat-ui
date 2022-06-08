@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       headers: {
-        Authorization: "Bearer " + getToken()
+        token: getToken()
       },
       Quill: null,
       currentValue: "",

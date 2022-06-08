@@ -18,20 +18,11 @@ export function getUser(userId) {
   })
 }
 
-// 新增用户
-export function addUser(data) {
+// 新增修改用户
+export function addOrUpdateUser(data) {
   return request({
     url: '/user',
     method: 'post',
-    data: data
-  })
-}
-
-// 修改用户
-export function updateUser(data) {
-  return request({
-    url: '/user',
-    method: 'put',
     data: data
   })
 }

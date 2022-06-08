@@ -1,26 +1,11 @@
 import request from '@/utils/request'
 
-export function hello(key, password) {
-  return request({
-    url: '/login/hello',
-    method: 'get'
-  })
-}
-
 // 登录方法
 export function login(key, password) {
   return request({
-    url: '/login/auth',
+    url: '/auth/login',
     method: 'post',
     data: { key, password }
-  })
-}
-
-// 刷新方法
-export function refreshToken() {
-  return request({
-    url: '/auth/refresh',
-    method: 'post'
   })
 }
 
@@ -35,7 +20,7 @@ export function getInfo() {
 // 退出方法
 export function logout() {
   return request({
-    url: '/login/logout',
+    url: '/auth/logout',
     method: 'delete'
   })
 }
