@@ -25,8 +25,8 @@ export function getRole(roleId) {
   })
 }
 
-// 新增角色
-export function addRole(data) {
+// 新增or修改角色
+export function addOrUpdateRole(data) {
   return request({
     url: '/role',
     method: 'post',
